@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 工具箱 - 本地 AI 應用平台</title>
+    <link rel="stylesheet" href="../shared/shared-styles.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 側邊欄 -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon">🤖</span>
+                    <span class="logo-text">AI 工具箱</span>
+                </a>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active" data-module="chat">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-text">AI 對話</span>
+                </li>
+                <li class="nav-item" data-module="writing">
+                    <span class="nav-icon">✍️</span>
+                    <span class="nav-text">寫作工作台</span>
+                </li>
+                <li class="nav-item" data-module="code-review">
+                    <span class="nav-icon">🔍</span>
+                    <span class="nav-text">程式碼審查</span>
+                </li>
+                <li class="nav-item" data-module="knowledge">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-text">知識庫</span>
+                </li>
+                <li class="nav-item" data-module="image">
+                    <span class="nav-icon">🎨</span>
+                    <span class="nav-text">圖像生成</span>
+                </li>
+                <li class="nav-item" data-module="tutorial">
+                    <span class="nav-icon">📖</span>
+                    <span class="nav-text">使用教學</span>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="model-selector-wrapper">
+                    <label>選擇模型</label>
+                    <select id="modelSelect" class="select"></select>
+                    <span id="modelStatus" class="model-status"></span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主內容區 -->
+        <main class="main-content">
+            <!-- 對話模組 -->
+            <div id="chat-module" class="module active">
+                <div class="module-header">
+                    <h1>💬 AI 對話</h1>
+                    <p>與 AI 進行自然對話</p>
+                </div>
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages"></div>
+                    <div class="chat-input-area">
+                        <textarea id="chatInput" class="textarea" placeholder="輸入你的問題..." rows="3"></textarea>
+                        <div class="chat-actions">
+                            <button id="clearChat" class="btn btn-secondary btn-sm">清除對話</button>
+                            <button id="sendChat" class="btn btn-primary">發送</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 寫作模組 -->
+            <div id="writing-module" class="module">
+                <div class="module-header">
+                    <h1>✍️ 寫作工作台</h1>
+                    <p>AI 輔助寫作工具</p>
+                </div>
+                <div class="writing-container">
+                    <div class="writing-tools">
+                        <button class="tool-btn active" data-tool="rewrite">改寫</button>
+                        <button class="tool-btn" data-tool="style">風格轉換</button>
+                        <button class="tool-btn" data-tool="expand">擴寫</button>
+                        <button class="tool-btn" data-tool="summary">摘要</button>
+                        <button class="tool-btn" data-tool="title">標題發想</button>
+                        <button class="tool-btn" data-tool="seo">SEO 優化</button>
+                        <button class="tool-btn" data-tool="slogan">標語口號</button>
+                        <button class="tool-btn" data-tool="social">社群貼文</button>
+                    </div>
+                    <div class="style-selector" id="styleSelector" style="display: none;">
+                        <label>選擇風格：</label>
+                        <select id="styleSelect" class="select">
+                            <option value="formal">正式專業</option>
+                            <option value="casual">輕鬆口語</option>
+                            <option value="sales">銷售說服</option>
+                            <option value="academic">學術嚴謹</option>
+                            <option value="friendly">親切友善</option>
+                            <option value="humor">幽默風趣</option>
+                        </select>
+                    </div>
+                    <textarea id="writingInput" class="textarea" placeholder="請輸入你的文字內容..." rows="8"></textarea>
+                    <button id="processWriting" class="btn btn-primary">處理文字</button>
+                    <div id="writingResult" class="result-area"></div>
+                </div>
+            </div>
+
+            <!-- 程式碼審查模組 -->
+            <div id="code-review-module" class="module">
+                <div class="module-header">
+                    <h1>🔍 程式碼審查</h1>
+                    <p>AI 輔助程式碼分析</p>
+                </div>
+                <div class="code-container">
+                    <div class="code-tools">
+                        <button class="tool-btn active" data-tool="review">審查程式碼</button>
+                        <button class="tool-btn" data-tool="test">生成測試</button>
+                        <button class="tool-btn" data-tool="refactor">重構建議</button>
+                        <button class="tool-btn" data-tool="explain">解釋程式碼</button>
+                    </div>
+                    <div class="language-selector">
+                        <label>程式語言：</label>
+                        <select id="langSelect" class="select">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="java">Java</option>
+                            <option value="csharp">C#</option>
+                            <option value="cpp">C++</option>
+                            <option value="go">Go</option>
+                            <option value="rust">Rust</option>
+                            <option value="php">PHP</option>
+                        </select>
+                    </div>
+                    <textarea id="codeInput" class="textarea code-textarea" placeholder="請貼上你的程式碼..." rows="12"></textarea>
+                    <button id="processCode" class="btn btn-primary">分析程式碼</button>
+                    <div id="codeResult" class="result-area"></div>
+                </div>
+            </div>
+
+            <!-- 知識庫模組 -->
+            <div id="knowledge-module" class="module">
+                <div class="module-header">
+                    <h1>📚 知識庫</h1>
+                    <p>個人知識管理與 AI 問答</p>
+                </div>
+                <div class="knowledge-container">
+                    <div class="knowledge-tabs">
+                        <button class="tab-btn active" data-tab="query">查詢知識</button>
+                        <button class="tab-btn" data-tab="add">新增筆記</button>
+                        <button class="tab-btn" data-tab="manage">管理筆記</button>
+                    </div>
+
+                    <!-- 查詢知識 -->
+                    <div id="query-tab" class="tab-content active">
+                        <div class="query-area">
+                            <textarea id="queryInput" class="textarea" placeholder="輸入你的問題，AI 會根據知識庫內容回答..." rows="3"></textarea>
+                            <button id="queryKnowledge" class="btn btn-primary">查詢</button>
+                        </div>
+                        <div id="queryResult" class="result-area"></div>
+                    </div>
+
+                    <!-- 新增筆記 -->
+                    <div id="add-tab" class="tab-content">
+                        <div class="note-form">
+                            <input type="text" id="noteTitle" class="input" placeholder="筆記標題">
+                            <textarea id="noteContent" class="textarea" placeholder="筆記內容..." rows="6"></textarea>
+                            <input type="text" id="noteTags" class="input" placeholder="標籤（用逗號分隔）">
+                            <button id="addNote" class="btn btn-primary">新增筆記</button>
+                        </div>
+                    </div>
+
+                    <!-- 管理筆記 -->
+                    <div id="manage-tab" class="tab-content">
+                        <div class="notes-header">
+                            <input type="text" id="searchNotes" class="input" placeholder="搜尋筆記...">
+                            <button id="clearAllNotes" class="btn btn-danger btn-sm">清除全部</button>
+                        </div>
+                        <div id="notesList" class="notes-list"></div>
+                    </div>
+
+                    <div class="knowledge-stats">
+                        <span>📝 筆記數: <strong id="noteCount">0</strong></span>
+                        <span>🔍 查詢次數: <strong id="queryCount">0</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 圖像生成模組 -->
+            <div id="image-module" class="module">
+                <div class="module-header">
+                    <h1>🎨 圖像生成</h1>
+                    <p>使用 Stable Diffusion 生成圖像</p>
+                </div>
+                <div class="image-container">
+                    <!-- 連線狀態 -->
+                    <div class="sd-status" id="sdStatus">
+                        <span class="status-dot" id="sdStatusDot"></span>
+                        <span id="sdStatusText">檢查 Stable Diffusion 連線中...</span>
+                    </div>
+
+                    <!-- 提示詞輸入 -->
+                    <div class="prompt-section">
+                        <label>正向提示詞 (Prompt)</label>
+                        <textarea id="imagePrompt" class="textarea" placeholder="描述你想生成的圖像，例如：a beautiful sunset over mountains, dramatic lighting, 8k, masterpiece" rows="3"></textarea>
+                    </div>
+
+                    <div class="prompt-section">
+                        <label>負向提示詞 (Negative Prompt)</label>
+                        <textarea id="negativePrompt" class="textarea" placeholder="描述你不想要的元素，例如：blurry, low quality, distorted" rows="2"></textarea>
+                    </div>
+
+                    <!-- 生成設定 -->
+                    <div class="image-settings">
+                        <div class="setting-group">
+                            <label>尺寸</label>
+                            <select id="imageSize" class="select">
+                                <option value="512x512">512 x 512</option>
+                                <option value="768x768">768 x 768</option>
+                                <option value="1024x1024" selected>1024 x 1024</option>
+                                <option value="1024x768">1024 x 768 (橫向)</option>
+                                <option value="768x1024">768 x 1024 (直向)</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label>步數 (Steps)</label>
+                            <input type="number" id="imageSteps" class="input" value="20" min="1" max="50">
+                        </div>
+                        <div class="setting-group">
+                            <label>CFG Scale</label>
+                            <input type="number" id="imageCfg" class="input" value="7" min="1" max="20" step="0.5">
+                        </div>
+                        <div class="setting-group">
+                            <label>Seed (-1 隨機)</label>
+                            <input type="number" id="imageSeed" class="input" value="-1">
+                        </div>
+                    </div>
+
+                    <button id="generateImage" class="btn btn-primary btn-lg">生成圖像</button>
+
+                    <!-- 生成結果 -->
+                    <div id="imageResult" class="image-result">
+                        <div class="image-placeholder">
+                            <span>🖼️</span>
+                            <p>生成的圖像會顯示在這裡</p>
+                        </div>
+                    </div>
+
+                    <!-- 圖庫 -->
+                    <div class="image-gallery">
+                        <div class="gallery-header">
+                            <h3>圖庫</h3>
+                            <button id="clearGallery" class="btn btn-secondary btn-sm">清空圖庫</button>
+                        </div>
+                        <div id="galleryGrid" class="gallery-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 使用教學模組 -->
+            <div id="tutorial-module" class="module">
+                <div class="module-header">
+                    <h1>📖 使用教學</h1>
+                    <p>安裝指南與模型下載教學</p>
+                </div>
+                <div class="tutorial-container">
+                    <!-- 快速導覽 -->
+                    <div class="tutorial-nav">
+                        <button class="tutorial-nav-btn active" data-section="install">安裝指南</button>
+                        <button class="tutorial-nav-btn" data-section="models">模型下載</button>
+                        <button class="tutorial-nav-btn" data-section="sd">圖像生成設定</button>
+                        <button class="tutorial-nav-btn" data-section="deploy">部署說明</button>
+                    </div>
+
+                    <!-- 安裝指南 -->
+                    <div id="install-section" class="tutorial-section active">
+                        <h2>1. 安裝 Ollama</h2>
+                        <div class="step-card">
+                            <h3>步驟 1：下載 Ollama</h3>
+                            <p>前往官方網站下載安裝程式：</p>
+                            <a href="https://ollama.com/download" target="_blank" class="btn btn-primary">前往 Ollama 官網</a>
+                            <div class="os-options">
+                                <div class="os-card">
+                                    <span class="os-icon">🪟</span>
+                                    <span>Windows</span>
+                                </div>
+                                <div class="os-card">
+                                    <span class="os-icon">🍎</span>
+                                    <span>macOS</span>
+                                </div>
+                                <div class="os-card">
+                                    <span class="os-icon">🐧</span>
+                                    <span>Linux</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <h3>步驟 2：驗證安裝</h3>
+                            <p>安裝完成後，開啟終端機輸入：</p>
+                            <div class="code-block">ollama --version</div>
+                            <p>如果顯示版本號碼，表示安裝成功！</p>
+                        </div>
+                        <div class="step-card">
+                            <h3>步驟 3：啟動服務</h3>
+                            <p>Ollama 安裝後會自動在背景執行。確認服務狀態：</p>
+                            <div class="code-block">ollama list</div>
+                        </div>
+                    </div>
+
+                    <!-- 模型下載 -->
+                    <div id="models-section" class="tutorial-section">
+                        <h2>2. 下載 AI 模型</h2>
+                        <div class="step-card">
+                            <h3>推薦模型</h3>
+                            <div class="model-list">
+                                <div class="model-item">
+                                    <div class="model-info">
+                                        <strong>llama3.2</strong>
+                                        <span class="model-size">2GB</span>
+                                    </div>
+                                    <p>Meta 最新模型，速度快、效果好</p>
+                                    <div class="code-block">ollama pull llama3.2</div>
+                                </div>
+                                <div class="model-item">
+                                    <div class="model-info">
+                                        <strong>qwen2.5</strong>
+                                        <span class="model-size">4.4GB</span>
+                                    </div>
+                                    <p>阿里巴巴模型，中文能力優秀</p>
+                                    <div class="code-block">ollama pull qwen2.5</div>
+                                </div>
+                                <div class="model-item">
+                                    <div class="model-info">
+                                        <strong>mistral</strong>
+                                        <span class="model-size">4.1GB</span>
+                                    </div>
+                                    <p>Mistral AI 模型，程式碼能力強</p>
+                                    <div class="code-block">ollama pull mistral</div>
+                                </div>
+                                <div class="model-item">
+                                    <div class="model-info">
+                                        <strong>deepseek-coder-v2</strong>
+                                        <span class="model-size">8.9GB</span>
+                                    </div>
+                                    <p>專精程式碼的模型</p>
+                                    <div class="code-block">ollama pull deepseek-coder-v2</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <h3>查看已安裝的模型</h3>
+                            <div class="code-block">ollama list</div>
+                        </div>
+                        <div class="step-card">
+                            <h3>刪除模型</h3>
+                            <div class="code-block">ollama rm 模型名稱</div>
+                        </div>
+                        <div class="step-card">
+                            <h3>更多模型</h3>
+                            <p>前往 Ollama 模型庫瀏覽更多模型：</p>
+                            <a href="https://ollama.com/library" target="_blank" class="btn btn-secondary">瀏覽模型庫</a>
+                        </div>
+                    </div>
+
+                    <!-- 圖像生成設定 -->
+                    <div id="sd-section" class="tutorial-section">
+                        <h2>3. 圖像生成設定 (Stable Diffusion)</h2>
+                        <div class="step-card requirements">
+                            <h3>系統需求</h3>
+                            <ul>
+                                <li>NVIDIA 顯示卡 (建議 RTX 3060 以上)</li>
+                                <li>至少 8GB VRAM</li>
+                                <li>Python 3.10.6</li>
+                                <li>Git</li>
+                            </ul>
+                        </div>
+                        <div class="step-card">
+                            <h3>步驟 1：安裝 AUTOMATIC1111 WebUI</h3>
+                            <div class="code-block">git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+cd stable-diffusion-webui</div>
+                        </div>
+                        <div class="step-card">
+                            <h3>步驟 2：下載模型</h3>
+                            <p>推薦模型下載網站：</p>
+                            <ul>
+                                <li><a href="https://civitai.com/" target="_blank">Civitai</a> - 最大的模型社群</li>
+                                <li><a href="https://huggingface.co/" target="_blank">Hugging Face</a> - AI 模型平台</li>
+                            </ul>
+                            <p>下載後將 <code>.safetensors</code> 檔案放入：</p>
+                            <div class="code-block">stable-diffusion-webui/models/Stable-diffusion/</div>
+                        </div>
+                        <div class="step-card">
+                            <h3>步驟 3：啟動 WebUI（開啟 API）</h3>
+                            <p>Windows：</p>
+                            <div class="code-block">webui-user.bat --api</div>
+                            <p>macOS / Linux：</p>
+                            <div class="code-block">./webui.sh --api</div>
+                        </div>
+                        <div class="step-card">
+                            <h3>步驟 4：驗證連線</h3>
+                            <p>開啟瀏覽器訪問：</p>
+                            <div class="code-block">http://127.0.0.1:7860</div>
+                            <p>看到 WebUI 介面即表示成功！</p>
+                        </div>
+                    </div>
+
+                    <!-- 部署說明 -->
+                    <div id="deploy-section" class="tutorial-section">
+                        <h2>4. 部署說明</h2>
+                        <div class="step-card">
+                            <h3>本地使用</h3>
+                            <p>直接用瀏覽器開啟 <code>index.html</code> 即可使用。</p>
+                            <div class="note-box">
+                                <strong>注意：</strong>確保 Ollama 正在背景執行。
+                            </div>
+                        </div>
+                        <div class="step-card">
+                            <h3>區域網路分享</h3>
+                            <p>設定 Ollama 允許遠端連線：</p>
+                            <p>1. 設定環境變數：</p>
+                            <div class="code-block">OLLAMA_HOST=0.0.0.0</div>
+                            <p>2. 重啟 Ollama 服務</p>
+                            <p>3. 其他裝置透過你的 IP 位址存取</p>
+                        </div>
+                        <div class="step-card">
+                            <h3>使用本地伺服器</h3>
+                            <p>使用 Python 快速啟動：</p>
+                            <div class="code-block">python -m http.server 8000</div>
+                            <p>或使用 Node.js：</p>
+                            <div class="code-block">npx serve</div>
+                        </div>
+                        <div class="step-card">
+                            <h3>GitHub Pages 部署</h3>
+                            <p>1. 上傳至 GitHub 倉庫</p>
+                            <p>2. 進入 Settings → Pages</p>
+                            <p>3. 選擇 Branch: main，資料夾: / (root)</p>
+                            <p>4. 儲存後等待部署完成</p>
+                            <div class="note-box warning">
+                                <strong>注意：</strong>GitHub Pages 只能呈現前端頁面。使用者需在自己的電腦安裝並執行 Ollama。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../shared/ollama-api.js"></script>
+    <script src="../shared/model-selector.js"></script>
+    <script src="../shared/utils.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
