@@ -528,7 +528,7 @@ async function checkSDStatus() {
         }
     } catch (e) {
         dot.classList.remove('online');
-        text.textContent = 'SD WebUI 未連線 - 請啟動 AUTOMATIC1111';
+        text.textContent = 'SD WebUI 未連線 - 請啟動 Stable Diffusion Forge';
     }
 }
 
@@ -607,7 +607,7 @@ async function generateImage() {
         resultArea.innerHTML = `
             <div class="image-error">
                 <p>生成失敗：${error.message}</p>
-                <p>請確認 AUTOMATIC1111 WebUI 已啟動並開啟 API 模式</p>
+                <p>請確認 Stable Diffusion Forge 已啟動並開啟 API 模式</p>
             </div>
         `;
     } finally {
