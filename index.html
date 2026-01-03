@@ -13,12 +13,16 @@
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             text-align: center;
+            position: relative;
+            z-index: 10;
         }
 
         .header {
@@ -114,7 +118,7 @@
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
 
@@ -143,11 +147,311 @@
             color: var(--text-color);
         }
 
+        /* ===== 作者資訊 ===== */
         .footer {
             color: white;
             margin-top: 30px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #FFD700;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 215, 0, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .social-link:hover {
+            background: #FFD700;
+            color: #1A1A1A;
+            transform: translateY(-3px);
+        }
+
+        .social-link .link-icon {
+            font-size: 20px;
+        }
+
+        .copyright {
+            margin-top: 20px;
             font-size: 14px;
-            opacity: 0.8;
+            opacity: 0.7;
+        }
+
+        /* ===== 粒子特效 ===== */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -100px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatUp linear infinite;
+            box-shadow:
+                inset 0 -5px 20px rgba(255, 255, 255, 0.4),
+                inset 5px 0 20px rgba(255, 255, 255, 0.2),
+                0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -100px;
+                opacity: 0;
+                transform: scale(0.4) translateX(0);
+            }
+            10% {
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(1) translateX(-20px);
+            }
+            100% {
+                bottom: 110vh;
+                opacity: 0;
+                transform: scale(1.2) translateX(20px);
+            }
+        }
+
+        /* ===== 控制面板 ===== */
+        .control-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: #FFD700;
+            color: #1A1A1A;
+            transform: scale(1.1);
+        }
+
+        .control-btn.active {
+            background: #FFD700;
+            color: #1A1A1A;
+        }
+
+        /* ===== 音樂播放器 ===== */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(26, 26, 26, 0.95);
+            border-radius: 16px;
+            padding: 15px 20px;
+            color: white;
+            z-index: 1000;
+            min-width: 280px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            display: none;
+        }
+
+        .music-player.show {
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        .music-player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .music-player-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .music-player-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .music-player-close:hover {
+            opacity: 1;
+        }
+
+        .music-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .music-play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #FFD700;
+            color: #1A1A1A;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .music-play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .music-info {
+            flex: 1;
+        }
+
+        .music-name {
+            font-size: 13px;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .music-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .music-progress-bar {
+            height: 100%;
+            background: #FFD700;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #FFD700;
+            cursor: pointer;
+        }
+
+        /* ===== 媒體播放器 ===== */
+        .media-player-section {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .media-player-section h4 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .media-upload {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .media-input {
+            display: none;
+        }
+
+        .media-upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px dashed rgba(255, 215, 0, 0.5);
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .media-upload-btn:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #FFD700;
+        }
+
+        .media-preview {
+            width: 100%;
+            border-radius: 12px;
+            background: #000;
+            display: none;
+        }
+
+        .media-preview.show {
+            display: block;
         }
 
         @keyframes pulse {
@@ -157,6 +461,11 @@
 
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -175,10 +484,73 @@
             .app-button .text {
                 text-align: center;
             }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .social-links {
+                flex-direction: column;
+            }
+
+            .control-panel {
+                top: 10px;
+                right: 10px;
+            }
+
+            .control-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .music-player {
+                left: 20px;
+                right: 20px;
+                min-width: auto;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 粒子特效容器 -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- 控制面板 -->
+    <div class="control-panel">
+        <button class="control-btn active" id="particleToggle" title="粒子特效">
+            ✨
+        </button>
+        <button class="control-btn" id="musicToggle" title="背景音樂">
+            🎵
+        </button>
+    </div>
+
+    <!-- 音樂播放器 -->
+    <div class="music-player" id="musicPlayer">
+        <div class="music-player-header">
+            <span class="music-player-title">🎵 背景音樂</span>
+            <button class="music-player-close" onclick="toggleMusicPlayer()">✕</button>
+        </div>
+        <div class="music-controls">
+            <button class="music-play-btn" id="musicPlayBtn" onclick="toggleMusic()">▶</button>
+            <div class="music-info">
+                <div class="music-name" id="musicName">選擇音樂檔案</div>
+                <div class="music-progress">
+                    <div class="music-progress-bar" id="musicProgress"></div>
+                </div>
+            </div>
+        </div>
+        <div class="volume-control">
+            <span>🔊</span>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="50">
+        </div>
+        <input type="file" id="musicInput" accept="audio/*" style="display:none">
+        <button class="media-upload-btn" onclick="document.getElementById('musicInput').click()" style="margin-top: 10px; padding: 10px; font-size: 13px;">
+            📁 選擇音樂檔案
+        </button>
+    </div>
+
     <div class="container">
         <header class="header">
             <h1>本地 AI 應用平台</h1>
@@ -194,7 +566,7 @@
                 <span class="icon">🚀</span>
                 <span class="text">
                     開啟 AI 工具箱
-                    <div class="subtitle">對話、寫作、程式審查、知識庫</div>
+                    <div class="subtitle">對話、寫作、程式審查、知識庫、圖像生成</div>
                 </span>
             </a>
 
@@ -215,16 +587,54 @@
                     <div class="icon">📚</div>
                     <div class="title">知識庫</div>
                 </div>
+                <div class="feature-card">
+                    <div class="icon">🎨</div>
+                    <div class="title">圖像生成</div>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📖</div>
+                    <div class="title">使用教學</div>
+                </div>
+            </div>
+
+            <!-- 媒體播放器 -->
+            <div class="media-player-section">
+                <h4>🎬 媒體播放器</h4>
+                <div class="media-upload">
+                    <label class="media-upload-btn">
+                        <span>📁</span>
+                        <span>選擇影片或音樂檔案</span>
+                        <input type="file" class="media-input" id="mediaInput" accept="video/*,audio/*">
+                    </label>
+                </div>
+                <video class="media-preview" id="mediaPreview" controls></video>
             </div>
         </div>
 
+        <!-- 作者資訊 -->
         <footer class="footer">
-            本地 AI 應用平台 | 完全離線、隱私安全
+            <h3>👨‍🏫 作者社群連結</h3>
+            <div class="social-links">
+                <a href="https://www.facebook.com/?locale=zh_TW" target="_blank" class="social-link">
+                    <span class="link-icon">📘</span>
+                    <span>Facebook</span>
+                </a>
+                <a href="https://www.youtube.com/@Liang-yt02" target="_blank" class="social-link">
+                    <span class="link-icon">📺</span>
+                    <span>YouTube</span>
+                </a>
+                <a href="https://www.facebook.com/groups/2754139931432955?locale=zh_TW" target="_blank" class="social-link">
+                    <span class="link-icon">🔬</span>
+                    <span>3A科技研究社</span>
+                </a>
+            </div>
+            <p class="copyright">© 2025 本地 AI 應用平台 | 完全離線、隱私安全</p>
         </footer>
     </div>
 
     <script src="shared/ollama-api.js"></script>
     <script>
+        // ===== Ollama 連線檢查 =====
         async function checkOllamaStatus() {
             const dot = document.getElementById('statusDot');
             const text = document.getElementById('statusText');
@@ -247,6 +657,115 @@
 
         checkOllamaStatus();
         setInterval(checkOllamaStatus, 30000);
+
+        // ===== 粒子特效 =====
+        let particlesEnabled = true;
+        const particleColors = [
+            'rgba(255, 215, 0, 0.6)',   // 金色
+            'rgba(255, 228, 77, 0.6)',  // 淺金
+            'rgba(255, 199, 0, 0.6)',   // 深金
+            'rgba(255, 255, 255, 0.4)', // 白色
+        ];
+
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            container.innerHTML = '';
+
+            if (!particlesEnabled) return;
+
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+
+                const size = Math.random() * 60 + 20;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 8;
+                const duration = Math.random() * 6 + 8;
+                const color = particleColors[i % particleColors.length];
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.background = `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), ${color})`;
+
+                container.appendChild(particle);
+            }
+        }
+
+        function toggleParticles() {
+            particlesEnabled = !particlesEnabled;
+            const btn = document.getElementById('particleToggle');
+            btn.classList.toggle('active', particlesEnabled);
+            createParticles();
+        }
+
+        document.getElementById('particleToggle').addEventListener('click', toggleParticles);
+        createParticles();
+
+        // ===== 音樂播放器 =====
+        let audio = new Audio();
+        let isPlaying = false;
+
+        function toggleMusicPlayer() {
+            const player = document.getElementById('musicPlayer');
+            player.classList.toggle('show');
+            document.getElementById('musicToggle').classList.toggle('active', player.classList.contains('show'));
+        }
+
+        function toggleMusic() {
+            if (audio.src) {
+                if (isPlaying) {
+                    audio.pause();
+                    document.getElementById('musicPlayBtn').textContent = '▶';
+                } else {
+                    audio.play();
+                    document.getElementById('musicPlayBtn').textContent = '⏸';
+                }
+                isPlaying = !isPlaying;
+            }
+        }
+
+        document.getElementById('musicToggle').addEventListener('click', toggleMusicPlayer);
+
+        document.getElementById('musicInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                audio.src = url;
+                document.getElementById('musicName').textContent = file.name;
+                audio.play();
+                isPlaying = true;
+                document.getElementById('musicPlayBtn').textContent = '⏸';
+            }
+        });
+
+        document.getElementById('volumeSlider').addEventListener('input', function(e) {
+            audio.volume = e.target.value / 100;
+        });
+
+        audio.addEventListener('timeupdate', function() {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            document.getElementById('musicProgress').style.width = progress + '%';
+        });
+
+        audio.addEventListener('ended', function() {
+            isPlaying = false;
+            document.getElementById('musicPlayBtn').textContent = '▶';
+            document.getElementById('musicProgress').style.width = '0%';
+        });
+
+        // ===== 媒體播放器 =====
+        document.getElementById('mediaInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                const preview = document.getElementById('mediaPreview');
+                preview.src = url;
+                preview.classList.add('show');
+            }
+        });
     </script>
 </body>
 </html>
