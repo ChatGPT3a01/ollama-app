@@ -335,15 +335,106 @@ AI 會根據你的筆記回答！
 
 ### 5.5 圖像生成
 
-用文字描述，讓 AI 生成圖像（需額外安裝 Stable Diffusion）。
+用文字描述，讓 AI 生成圖像。
+
+⚠️ **此功能需要額外安裝 Stable Diffusion，請先完成以下安裝步驟！**
+
+---
+
+#### 📦 安裝 Stable Diffusion（第一次使用需安裝）
+
+**系統需求：**
+- NVIDIA 顯示卡（建議 RTX 3060 以上）
+- 至少 8GB 顯示記憶體（VRAM）
+- 約 10GB 硬碟空間
+
+**Step 1：安裝 Git**
+
+1. 前往：https://git-scm.com/download/win
+2. 下載並安裝（一直按下一步即可）
+
+**Step 2：安裝 Python 3.10.6**
+
+1. 前往：https://www.python.org/downloads/release/python-3106/
+2. 往下滑，點擊 **Windows installer (64-bit)** 下載
+3. 執行安裝程式
+4. ⚠️ **重要：務必勾選 "Add Python to PATH"**
+5. 點擊 Install Now
+
+**Step 3：下載 Stable Diffusion WebUI**
+
+1. 按 `Win + R`，輸入 `cmd`，按 Enter
+2. 輸入以下指令切換到 D 槽（或你想安裝的位置）：
+
+```bash
+D:
+```
+
+3. 輸入以下指令下載 Stable Diffusion：
+
+```bash
+git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+```
+
+> 📝 這會在 D 槽建立一個 `stable-diffusion-webui` 資料夾
+
+4. 進入資料夾：
+
+```bash
+cd stable-diffusion-webui
+```
+
+**Step 4：下載圖像生成模型**
+
+Stable Diffusion 需要模型檔案才能生成圖像。
+
+1. 前往模型下載網站：
+   - [Civitai](https://civitai.com/) - 最大的模型社群（推薦）
+   - [Hugging Face](https://huggingface.co/) - AI 模型平台
+
+2. 搜尋並下載你喜歡的模型（選擇 `.safetensors` 格式）
+
+3. 把下載的模型檔案放到這個資料夾：
+   ```
+   D:\stable-diffusion-webui\models\Stable-diffusion\
+   ```
+
+**Step 5：啟動 Stable Diffusion**
+
+1. 用檔案總管開啟 `D:\stable-diffusion-webui` 資料夾
+2. 找到 `webui-user.bat` 檔案
+3. **右鍵** → **編輯**（用記事本開啟）
+4. 找到 `set COMMANDLINE_ARGS=` 這一行
+5. 改成：
+   ```
+   set COMMANDLINE_ARGS=--api
+   ```
+6. 儲存並關閉
+7. 雙擊 `webui-user.bat` 啟動
+
+> ⏳ 第一次啟動會自動下載必要檔案，可能需要 10-30 分鐘，請耐心等待！
+
+8. 看到以下訊息表示啟動成功：
+   ```
+   Running on local URL: http://127.0.0.1:7860
+   ```
+
+9. 瀏覽器會自動開啟 Stable Diffusion 介面
+
+---
+
+#### 🎨 使用圖像生成功能
+
+安裝完成後，就可以使用圖像生成功能了！
 
 **使用方式：**
-1. 點擊左側選單的「🎨 圖像生成」
-2. 確認上方顯示「SD 已連線」（綠燈）
-3. 在「正向提示詞」輸入你想要的圖像描述（建議用英文）
-4. 在「負向提示詞」輸入你不想要的元素
-5. 調整設定（尺寸、步數等）
-6. 點擊「生成圖像」
+1. 確認 Stable Diffusion 正在運行（上面 Step 5）
+2. 開啟 AI 工具箱
+3. 點擊左側選單的「🎨 圖像生成」
+4. 確認上方顯示「SD 已連線」（綠燈）
+5. 在「正向提示詞」輸入你想要的圖像描述（建議用英文）
+6. 在「負向提示詞」輸入你不想要的元素
+7. 點擊「生成圖像」
 
 **提示詞範例：**
 
@@ -354,15 +445,37 @@ AI 會根據你的筆記回答！
 | 未來城市 | `futuristic city, cyberpunk, neon lights, flying cars, night scene, 4k` |
 | 水彩風景 | `watercolor painting, spring garden, flowers, soft colors, artistic` |
 
-**負向提示詞範例：**
+**負向提示詞範例（不想要的元素）：**
 ```
 blurry, low quality, distorted, ugly, bad anatomy, extra limbs
 ```
 
-**設定建議：**
-- **步數 (Steps)**：20-30（越高品質越好，但越慢）
-- **CFG Scale**：7-9（越高越接近提示詞描述）
-- **Seed**：-1 表示隨機，輸入固定數字可重現相同圖像
+**設定說明：**
+
+| 設定 | 建議值 | 說明 |
+|------|--------|------|
+| 步數 (Steps) | 20-30 | 越高品質越好，但越慢 |
+| CFG Scale | 7-9 | 越高越接近你的描述 |
+| Seed | -1 | -1 表示隨機，固定數字可重現相同圖像 |
+
+---
+
+#### ❓ 圖像生成常見問題
+
+**Q: 顯示「SD WebUI 未連線」怎麼辦？**
+
+A: 請確認：
+1. 已執行 `webui-user.bat` 啟動 Stable Diffusion
+2. 等待啟動完成（看到 `Running on local URL: http://127.0.0.1:7860`）
+3. 重新整理 AI 工具箱頁面
+
+**Q: 第一次啟動很久正常嗎？**
+
+A: 正常！第一次啟動會自動下載約 4GB 的必要檔案，請耐心等待。
+
+**Q: 沒有 NVIDIA 顯卡可以用嗎？**
+
+A: 可以但會很慢。需要修改設定使用 CPU 運算，生成一張圖可能要 10 分鐘以上。
 
 ---
 
@@ -375,78 +488,6 @@ blurry, low quality, distorted, ugly, bad anatomy, extra limbs
 - 部署說明
 
 點擊左側選單的「📖 使用教學」即可查看。
-
----
-
-## 圖像生成功能設定（進階，選用）
-
-如果想要使用 AI 圖像生成功能，需要額外安裝 Stable Diffusion。
-
-### 系統需求
-
-- NVIDIA 顯示卡（建議 RTX 3060 以上）
-- 至少 8GB 顯示記憶體（VRAM）
-- Python 3.10.6
-- Git
-
-### 步驟一：安裝 Git（如果還沒有）
-
-1. 前往：https://git-scm.com/download/win
-2. 下載並安裝
-
-### 步驟二：安裝 Python 3.10.6
-
-1. 前往：https://www.python.org/downloads/release/python-3106/
-2. 下載 **Windows installer (64-bit)**
-3. 安裝時**務必勾選** "Add Python to PATH"
-
-### 步驟三：下載 Stable Diffusion WebUI
-
-1. 按 `Win + R`，輸入 `cmd`，按 Enter
-2. 切換到你想要安裝的位置，例如 D 槽：
-
-```bash
-D:
-```
-
-3. 下載 Stable Diffusion WebUI：
-
-```bash
-git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
-```
-
-> **說明：** 這個指令會從 GitHub 下載整個 Stable Diffusion WebUI 專案到目前資料夾。
-
-4. 進入剛下載的資料夾：
-
-```bash
-cd stable-diffusion-webui
-```
-
-> **說明：** `cd` 是 "change directory" 的意思，用來切換資料夾。
-
-### 步驟四：下載 Stable Diffusion 模型
-
-1. 前往 [Civitai](https://civitai.com/) 或 [Hugging Face](https://huggingface.co/)
-2. 下載你喜歡的模型（`.safetensors` 檔案）
-3. 將下載的檔案放入：
-   ```
-   stable-diffusion-webui/models/Stable-diffusion/
-   ```
-
-### 步驟五：啟動 Stable Diffusion（開啟 API 模式）
-
-在 `stable-diffusion-webui` 資料夾中，執行：
-
-```bash
-webui-user.bat --api
-```
-
-> **說明：** `--api` 參數是讓本專案能夠呼叫 Stable Diffusion 生成圖像。
-
-首次啟動會自動下載必要檔案，需要較長時間。
-
-啟動成功後，瀏覽器會自動開啟 http://127.0.0.1:7860
 
 ---
 
