@@ -21,11 +21,27 @@
 
 ### 2. 下載 AI 模型
 
+**Windows 操作步驟：**
+1. 按 `Win + R`，輸入 `cmd`，按 Enter
+2. 在命令提示字元視窗輸入下載指令
+3. 等待下載完成
+
+**推薦模型：**
+
 ```bash
-# 推薦模型
-ollama pull llama3.2      # Meta 最新模型
+# 推薦首選（200億參數，綜合能力強）
+ollama pull gpt-oss:20b
+
+# 其他推薦模型
+ollama pull llama3.2      # Meta 最新模型，速度快
 ollama pull qwen2.5       # 阿里巴巴模型，中文能力優秀
-ollama pull mistral       # 程式碼能力強
+ollama pull mistral       # Mistral AI，程式碼能力強
+ollama pull deepseek-coder-v2  # 專精程式碼
+```
+
+**查看已安裝的模型：**
+```bash
+ollama list
 ```
 
 ### 3. 開啟應用
@@ -36,11 +52,30 @@ ollama pull mistral       # 程式碼能力強
 
 如需使用圖像生成功能，需安裝 AUTOMATIC1111 Stable Diffusion WebUI：
 
+### 系統需求
+- NVIDIA 顯示卡（建議 RTX 3060 以上）
+- 至少 8GB VRAM
+- Python 3.10.6
+- Git
+
+### 安裝步驟
+
 ```bash
 git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 cd stable-diffusion-webui
+```
 
-# 啟動時需開啟 API 模式
+### 下載 Stable Diffusion 模型
+
+推薦模型下載網站：
+- [Civitai](https://civitai.com/) - 最大的模型社群
+- [Hugging Face](https://huggingface.co/) - AI 模型平台
+
+下載 `.safetensors` 檔案後，放入 `models/Stable-diffusion/` 資料夾。
+
+### 啟動 WebUI（開啟 API 模式）
+
+```bash
 # Windows
 webui-user.bat --api
 
@@ -48,11 +83,7 @@ webui-user.bat --api
 ./webui.sh --api
 ```
 
-下載模型放入 `models/Stable-diffusion/` 資料夾。
-
-推薦模型下載網站：
-- [Civitai](https://civitai.com/) - 最大的模型社群
-- [Hugging Face](https://huggingface.co/) - AI 模型平台
+啟動後訪問 http://127.0.0.1:7860 確認運作正常。
 
 ## 檔案結構
 
@@ -75,13 +106,6 @@ ollama/
 - 現代瀏覽器（Chrome、Firefox、Edge、Safari）
 - [Ollama](https://ollama.com) 已安裝並運行
 - 至少一個已下載的模型
-
-### 圖像生成額外需求
-
-- NVIDIA 顯示卡（建議 RTX 3060 以上）
-- 至少 8GB VRAM
-- Python 3.10.6
-- Git
 
 ## 授權
 
