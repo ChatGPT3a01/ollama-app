@@ -361,7 +361,9 @@ AI 會根據你的筆記回答！
 4. ⚠️ **重要：務必勾選 "Add Python to PATH"**
 5. 點擊 Install Now
 
-**Step 3：下載 Stable Diffusion WebUI**
+**Step 3：下載 Stable Diffusion WebUI Forge**
+
+> ⚠️ **重要：請使用 Forge 版本！** 原版 AUTOMATIC1111 的倉庫已有相依性問題，Forge 版本更穩定且功能更多。
 
 1. 按 `Win + R`，輸入 `cmd`，按 Enter
 2. 輸入以下指令切換到 D 槽（或你想安裝的位置）：
@@ -370,18 +372,18 @@ AI 會根據你的筆記回答！
 D:
 ```
 
-3. 輸入以下指令下載 Stable Diffusion：
+3. 輸入以下指令下載 Stable Diffusion Forge：
 
 ```bash
-git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+git clone https://github.com/lllyasviel/stable-diffusion-webui-forge.git
 ```
 
-> 📝 這會在 D 槽建立一個 `stable-diffusion-webui` 資料夾
+> 📝 這會在 D 槽建立一個 `stable-diffusion-webui-forge` 資料夾
 
 4. 進入資料夾：
 
 ```bash
-cd stable-diffusion-webui
+cd stable-diffusion-webui-forge
 ```
 
 **Step 4：下載圖像生成模型**
@@ -396,12 +398,12 @@ Stable Diffusion 需要模型檔案才能生成圖像。
 
 3. 把下載的模型檔案放到這個資料夾：
    ```
-   D:\stable-diffusion-webui\models\Stable-diffusion\
+   D:\stable-diffusion-webui-forge\models\Stable-diffusion\
    ```
 
-**Step 5：啟動 Stable Diffusion**
+**Step 5：啟動 Stable Diffusion Forge**
 
-1. 用檔案總管開啟 `D:\stable-diffusion-webui` 資料夾
+1. 用檔案總管開啟 `D:\stable-diffusion-webui-forge` 資料夾
 2. 找到 `webui-user.bat` 檔案
 3. **右鍵** → **編輯**（用記事本開啟）
 4. 找到 `set COMMANDLINE_ARGS=` 這一行
